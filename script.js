@@ -10,6 +10,12 @@
     const packObj = {}
 
     // write your code here
+    for(var s in suits){
+        for(var k in values){
+            packArr.push(values[k]+" of "+suits[s]);
+            packObj[values[k]+" of "+suits[s]]==parseInt[k]+1;
+        }
+    }
 
 
     if(!asArray){
