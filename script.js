@@ -170,16 +170,41 @@ function initialDeal() {
     // Deal(Instantiate) 2 Dealer cards and 2 Player cards
 
     // write your code here
+    card1=new Card(deck.deal());
+    card2=new Card(deck.deal());
+    playerCard1=new Card(deck.deal());
+    playerCard2=new Card(deck.deal());
+    
+    
+
+    
+
+    
 
 
     // Open the board with 2 Dealer cards (one Dealer card is closed) and 2 Player cards (both open)
 
     // write your code here
+    card1.displayCard('card1',!0);
+    card2.displayCard('card2',!1);
+    playerCard1.displayCard('playerCard1',!0);
+    playerCard2.displayCard('playerCard2',!0);
+
+
 
 
     // Setting face card values to 10
 
     // write your code here
+    card1.value=10<card1.value?10:card1.value;
+    card2.value=10<card2.value?10:card2.value;
+    playerCard1.value=10<playerCard1.value?10:playerCard1.value;
+    playerCard2.value=10<playerCard2.value?10:playerCard2.value;
+    
+
+    
+
+
 
 
     // Getting player cards total - show an alert only if there is a Blackjack
@@ -197,6 +222,17 @@ function initialDeal() {
     */
 
     // write your code here
+    21===(playerTotal=playerCard1.value+playerCard2.value)&&cuteAlert({
+        type:"success",
+        title:"Superb!!!",
+        message: "Blackjacked !!!",
+        buttonText: "Wohoo !!!",
+        img:"success.svg"
+    }).then(()=> {
+        location.reload() // Load a new game
+    
+
+    })
 
 } //End of deal()
 
@@ -207,11 +243,32 @@ function stand() {
     // flip Dealer cards and compare
 
     // write your code here
+    card2.flip();
+    dealerTotal=card1.value+card2.values;
 
 
     // Checking Dealer and Player score - to give the result using cuteAlerts (just like the alert in initialDeal function)
 
     // write your code here
+    (playerTotal>=dealerTotal)?cuteAlert({
+        type:"success",
+        title:"Congratualtions !!!",
+        message:"You won the Game",
+        buttonText:"Yayy !",
+        img:"success.svg"
+    
+    }):cuteAlert({
+        type:"error",
+        title:"oh No !!!",
+        message:"Dealer won the Game",
+        buttonText:"ok :(",
+        img:"error.svg"
+    }
+    ).then(()=>{
+        location.reload()
+    
+
+    })
 
 }
 
@@ -227,6 +284,34 @@ function hit() {
     // Dealing the extra cards that the player requests
 
     // write your code here
+    playerCard3=new Card(deck.deal());
+    playerCard4=new Card(deck.deal());
+    if(0===extraCnt){
+        playerCard3.displayCard('playerCard3',!0);
+        playerCard3.value=10<playerCard3.value?10:playerCard3.value;
+        playerTotal+=playerCard3.value
+    }
+    else if(1===extraCnt){
+        playerCard4.displayCard('playerCard4',!0);
+        playerCard4.value=10<playerCard4.value?10:playerCard4.value;
+        playerTotal+=playerCard4.value
+    }
+    else{
+        dealButton.style.display='none';
+        cuteAlert({
+            type:"warning",
+            title:"sorry...",
+            message:"Max.Cards dealed",
+            buttonText:"OK",
+            img:"warning.svg"
+
+
+
+        })
+    }
+
+    
+
 
 
     // Dealing new cards 
@@ -245,6 +330,32 @@ function hit() {
     */
 
     // write your code here
+    if(21<playerTotal){
+        cuteAlert({
+            type:"error",
+            title:"Busted...",
+            message:"You lost the Game",
+            buttonText:"OK",
+            img:"error.svg"
+
+        }).then(()=>{
+            location.reload()});
+            dealButton.style.display='none'
+
+        }
+        else{
+            21===playerTotal&&cuteAlert({
+                type:"success",
+                title:"Superb!!!",
+                message:"Blackjacked !!!",
+                buttonText:"Wohoo !!!",
+                img:"success.svg"
+            }).then(()=>{
+                location.reload()});
+            }
+        
+    
+
 
 
     // Checking the total of the player cards before dealing new cards
